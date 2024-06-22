@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
         .then((response) => response.json())
         .then((newTodo) => {
-          addTodoToDOM(newTodo);
+          addTodoToDOM(newTodo, true);
           titleInput.value = "";
           descriptionInput.value = "";
         });
@@ -60,10 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Function to add a todo item to the DOM
-  function addTodoToDOM(todo) {
+  function addTodoToDOM(todo, prepend = false) {
     const li = document.createElement("li");
     li.className =
-      "flex flex-col items-start p-4 bg-gray-100 rounded mb-2 shadow-md";
+      "flex flex-col items-start p-4 bg-white rounded mb-2 shadow-md transition-transform transform hover:scale-105";
     li.id = todo.id;
 
     const title = document.createElement("h2");
@@ -105,7 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonsContainer.appendChild(deleteButton);
 
     li.appendChild(buttonsContainer);
-    todoList.appendChild(li);
+    if (prepend) {
+      todoList.prepend(li);
+    } else {
+      todoList.appendChild(li);
+    }
   }
 
   // Function to update a todo item in the DOM
